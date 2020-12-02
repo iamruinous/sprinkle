@@ -7,8 +7,8 @@ use structopt::StructOpt;
 
 mod settings;
 use crate::settings::Settings;
-mod util;
-use crate::util::tilde_path;
+mod utils;
+use crate::utils::tilde_path;
 mod source_linker;
 use crate::source_linker::SourceLinker;
 

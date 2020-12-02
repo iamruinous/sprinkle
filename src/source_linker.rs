@@ -6,7 +6,7 @@ use std::os::unix::fs::symlink;
 use std::path::{Path, PathBuf};
 use walkdir::{DirEntry, WalkDir};
 
-use crate::util::{is_not_excluded, is_not_hidden, tilde_path};
+use crate::utils::{is_not_excluded, is_not_hidden, tilde_path};
 
 #[derive(Debug)]
 pub struct SourceLinker {
