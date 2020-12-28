@@ -1,0 +1,18 @@
+debug = false
+
+[sources]
+  [sources.friendly_name]
+  enabled = true
+  path = "~/dotfiles"
+  excludes = [
+    "README",
+    "LICENSE",
+    "old",
+    "rcrc",
+    "bootstrap",
+    "iterm"
+  ]
+
+  [sources.another_friendly_name]
+  enabled = false
+  path = "~/olddir"
