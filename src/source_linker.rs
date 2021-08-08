@@ -20,20 +20,20 @@ pub struct SourceLinker {
 
 impl SourceLinker {
     pub fn new(
-        home_dir: PathBuf,
-        name: String,
+        home_dir: &Path,
+        name: &str,
         enabled: bool,
-        path: PathBuf,
-        excludes: HashSet<PathBuf>,
-        global_excludes: HashSet<PathBuf>,
-    ) -> SourceLinker {
-        SourceLinker {
-            home_dir,
-            name,
+        path: &Path,
+        excludes: &HashSet<PathBuf>,
+        global_excludes: &HashSet<PathBuf>,
+    ) -> Self {
+        Self {
+            home_dir: home_dir.into(),
+            name: name.into(),
             enabled,
-            path,
-            excludes,
-            global_excludes,
+            path: path.into(),
+            excludes: excludes.clone(),
+            global_excludes: global_excludes.clone(),
         }
     }
 
@@ -57,28 +57,8 @@ impl SourceLinker {
             fs::create_dir_all(parent_path)?;
         }
         symlink(entry.path(), dest_path)?;
-        return Ok(());
+        Ok(())
     }
-
-    // fn link_dir(&self, entry: &DirEntry, dest_path: &Path) -> Result<()> {
-    //     // If directory is empty, skip
-    //     if fs::read_dir(entry.path())?.take(1).count() > 0 {
-    //         info!("directory is empty, skipping {}", dest_path.display());
-    //         return Ok(());
-    //     }
-    //     // If directory already exists, skip
-    //     if dest_path.exists() {
-    //         info!("directory exists, skipping {}", dest_path.display());
-    //         return Ok(());
-    //     }
-    //     info!(
-    //         "mkdir -p {}, {}",
-    //         entry.path().display(),
-    //         dest_path.display()
-    //     );
-    //     fs::create_dir_all(dest_path)?;
-    //     return Ok(());
-    // }
 
     pub fn link(&self) -> Result<()> {
         if !self.enabled {
@@ -106,10 +86,7 @@ impl SourceLinker {
             if entry.file_type().is_file() {
                 self.link_file(&entry, dest_path)?;
             }
-            // if entry.file_type().is_dir() {
-            //     self.link_dir(&entry, dest_path)?;
-            // }
         }
-        return Ok(());
+        Ok(())
     }
 }

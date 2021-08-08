@@ -20,5 +20,4 @@ log = "0.4.11"
 
 [features]
 termcolor = []
-
 default = ["termcolor"]

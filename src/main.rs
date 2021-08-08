@@ -38,11 +38,6 @@ fn main() -> Result<()> {
         TermLogger::new(term_filter, Config::default(), TerminalMode::Mixed).unwrap(),
         #[cfg(not(feature = "termcolor"))]
         SimpleLogger::new(term_filter, Config::default()),
-        // WriteLogger::new(
-        //     LevelFilter::Info,
-        //     Config::default(),
-        //     File::create("my_rust_binary.log").unwrap(),
-        // ),
     ])?;
 
     let args = Cli::from_args();
@@ -51,12 +46,12 @@ fn main() -> Result<()> {
     let excludes = settings.excludes;
     for (name, source) in sources.iter() {
         let sl = SourceLinker::new(
-            home_dir.clone(),
-            name.clone(),
+            &home_dir,
+            name,
             source.enabled,
-            source.path.clone(),
-            source.excludes.clone(),
-            excludes.clone(),
+            &source.path,
+            &source.excludes,
+            &excludes,
         );
         debug!("{:?}", sl);
         sl.link()?;

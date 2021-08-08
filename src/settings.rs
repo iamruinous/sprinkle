@@ -1,5 +1,4 @@
 use config::{Config, ConfigError, Environment, File};
-use dirs;
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
