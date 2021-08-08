@@ -12,12 +12,12 @@ fn file_doesnt_exist() -> Result<(), Box<dyn std::error::Error>> {
     let excludes: HashSet<PathBuf> = HashSet::new();
     let global_excludes: HashSet<PathBuf> = HashSet::new();
     let sl = SourceLinker::new(
-        home_dir,
-        name.to_string(),
+        &home_dir,
+        &name,
         enabled,
-        path,
-        excludes,
-        global_excludes,
+        &path,
+        &excludes,
+        &global_excludes,
     );
     let _ = sl.link();
 
