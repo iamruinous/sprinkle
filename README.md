@@ -1,4 +1,4 @@
 # sprinkle
 A stupid dotfile manager
 
-![Rust](https://github.com/iamruinous/sprinkle/workflows/Rust/badge.svg)
+[![Continuous integration](https://github.com/iamruinous/sprinkle/actions/workflows/ci.yml/badge.svg)](https://github.com/iamruinous/sprinkle/actions/workflows/ci.yml)
