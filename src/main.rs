@@ -12,8 +12,11 @@ use crate::utils::tilde_path;
 mod source_linker;
 use crate::source_linker::SourceLinker;
 
-/// Search for a pattern in a file and display the lines that contain it.
 #[derive(StructOpt)]
+/// Sprinkle!
+///
+/// Sprinkle your dotfiles all around
+#[structopt(name = "sprinkle", about = "Dotfile manager", author)]
 struct Cli {
     /// Output file
     #[structopt(
