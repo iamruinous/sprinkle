@@ -39,7 +39,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: taiki-e/github-actions/install-rust@main
+      - uses: taiki-e/github-actions/install-rust@v1
         with:
           toolchain: ${{ matrix.rust || 'nightly' }}
       - run: |
@@ -48,7 +48,7 @@ jobs:
             gcc-arm-linux-gnueabihf \
             gcc-aarch64-linux-gnu
         if: startsWith(matrix.os, 'ubuntu')
-      - uses: taiki-e/upload-rust-binary-action@strip
+      - uses: taiki-e/upload-rust-binary-action@v1
         with:
           bin: sprinkle
           target: ${{ matrix.target }}
