@@ -1,5 +1,8 @@
 name: Release
 
+permissions:
+  contents: write
+
 on:
   push:
     tags:
@@ -10,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: taiki-e/create-gh-release-action@main
+      - uses: taiki-e/create-gh-release-action@v1
         with:
           # (optional)
           changelog: CHANGELOG.md
@@ -36,20 +39,27 @@ jobs:
             os: ubuntu-latest
           - target: x86_64-apple-darwin
             os: macos-latest
+          - target: aarch64-apple-darwin
+            os: macos-11
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: ${{ matrix.rust || 'stable' }}
-          override: true
       - run: |
           sudo apt-get update && sudo apt-get install -y \
             gcc-arm-linux-gnueabi \
             gcc-arm-linux-gnueabihf \
             gcc-aarch64-linux-gnu
         if: startsWith(matrix.os, 'ubuntu')
+      - name: Select XCode version
+        run: sudo xcode-select -s "/Applications/Xcode_12.2.app"
+        if: startsWith(matrix.os, 'macos-11')
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust || 'stable' }}
+          target: ${{ matrix.target }}
+          override: true
+      - uses: Swatinem/rust-cache@v1
       - uses: taiki-e/upload-rust-binary-action@v1
         with:
           bin: sprinkle
