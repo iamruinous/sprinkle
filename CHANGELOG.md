@@ -6,7 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.0] - 2021-06-13
+## [0.2.1] - 2021-11-14
+
+### Fixed
+- broken filter logic
+
+## [0.2.0] - 2021-11-14
 
 ### Added
 - automatic release management
