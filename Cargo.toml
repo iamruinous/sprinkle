@@ -1,6 +1,6 @@
 [package]
 name = "sprinkle"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Jade Meskill <jade.meskill@gmail.com>"]
 edition = "2018"
 license = "MIT"
