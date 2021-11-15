@@ -39,9 +39,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      - uses: taiki-e/github-actions/install-rust@v1
+      - uses: actions-rs/toolchain@v1
         with:
-          toolchain: ${{ matrix.rust || 'nightly' }}
+          profile: minimal
+          toolchain: ${{ matrix.rust || 'stable' }}
+          override: true
       - run: |
           sudo apt-get update && sudo apt-get install -y \
             gcc-arm-linux-gnueabi \
