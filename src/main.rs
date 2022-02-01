@@ -1,9 +1,12 @@
+// SPDX-FileCopyrightText: © 2022 Jade Meskill
+//
+// SPDX-License-Identifier: MIT
+
 use anyhow::Result;
+use clap::Parser;
 use log::*;
 use simplelog::*;
-// use std::fs::File;
 use std::path::PathBuf;
-use structopt::StructOpt;
 
 mod settings;
 use crate::settings::Settings;
@@ -12,18 +15,19 @@ use crate::utils::tilde_path;
 mod source_linker;
 use crate::source_linker::SourceLinker;
 
-#[derive(StructOpt)]
+#[derive(Parser, Debug)]
 /// Sprinkle!
 ///
 /// Sprinkle your dotfiles all around
-#[structopt(name = "sprinkle", about = "Dotfile manager", author)]
+#[clap(author, version, about, long_about = None)]
 struct Cli {
     /// Output file
-    #[structopt(
-        short = "h",
+    #[clap(
+        short = 'o',
         long = "home-dir-override",
         help = "Override $HOME",
         default_value = "~",
+        env = "SPRINKLE_HOME_DIR_OVERRIDE",
         parse(from_os_str)
     )]
     home_dir_override: PathBuf,
@@ -38,12 +42,17 @@ fn main() -> Result<()> {
     };
     CombinedLogger::init(vec![
         #[cfg(feature = "termcolor")]
-        TermLogger::new(term_filter, Config::default(), TerminalMode::Mixed).unwrap(),
+        TermLogger::new(
+            term_filter,
+            Config::default(),
+            TerminalMode::Mixed,
+            ColorChoice::Auto,
+        ),
         #[cfg(not(feature = "termcolor"))]
         SimpleLogger::new(term_filter, Config::default()),
     ])?;
 
-    let args = Cli::from_args();
+    let args = Cli::parse();
     let home_dir = tilde_path(&args.home_dir_override);
     let sources = settings.sources;
     let excludes = settings.excludes;

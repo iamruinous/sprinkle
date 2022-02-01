@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: © 2022 Jade Meskill
+//
+// SPDX-License-Identifier: MIT
+
 use anyhow::Result;
 use log::*;
 use std::collections::HashSet;

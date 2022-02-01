@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: © 2022 Jade Meskill
+//
+// SPDX-License-Identifier: MIT
+
 use std::collections::HashSet;
 use std::path::{Path, PathBuf};
 use walkdir::DirEntry;

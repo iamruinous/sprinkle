@@ -1,9 +1,13 @@
+// SPDX-FileCopyrightText: © 2022 Jade Meskill
+//
+// SPDX-License-Identifier: MIT
+
 use config::{Config, ConfigError, Environment, File};
 use serde::Deserialize;
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
 
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Default, Debug, Deserialize, Clone)]
 #[serde(default)]
 pub struct Source {
     pub path: PathBuf,
@@ -11,32 +15,12 @@ pub struct Source {
     pub excludes: HashSet<PathBuf>,
 }
 
-impl Default for Source {
-    fn default() -> Self {
-        Source {
-            path: PathBuf::new(),
-            enabled: true,
-            excludes: HashSet::new(),
-        }
-    }
-}
-
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Default, Debug, Deserialize, Clone)]
 #[serde(default)]
 pub struct Settings {
     pub debug: bool,
     pub excludes: HashSet<PathBuf>,
     pub sources: HashMap<String, Source>,
-}
-
-impl Default for Settings {
-    fn default() -> Self {
-        Settings {
-            debug: false,
-            excludes: HashSet::new(),
-            sources: HashMap::new(),
-        }
-    }
 }
 
 impl Settings {

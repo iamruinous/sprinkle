@@ -1,6 +1,10 @@
+# SPDX-FileCopyrightText: © 2022 Jade Meskill
+#
+# SPDX-License-Identifier: MIT
+
 on: [push, pull_request]
 
-name: Continuous integration
+name: CI
 
 permissions:
   contents: read

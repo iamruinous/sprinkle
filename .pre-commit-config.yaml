@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: © 2022 Jade Meskill <jade.meskill@gmail.com>
+#
+# SPDX-License-Identifier: MIT
+
+repos:
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: latest
+    hooks:
+      - id: reuse
+  - repo: https://github.com/doublify/pre-commit-rust
+    rev: master
+    hooks:
+      - id: fmt
+      - id: cargo-check
+      - id: clippy
