@@ -22,6 +22,7 @@ fn file_doesnt_exist() -> Result<(), Box<dyn std::error::Error>> {
         &path,
         &excludes,
         &global_excludes,
+        false,
     );
     let _ = sl.link();
 
