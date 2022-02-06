@@ -16,7 +16,7 @@ SPDX-License-Identifier: MIT
 
 A stupid simple dotfile manager
 
-sprinkle is a very simple dotfile / symlink manager. It is inspired by rcrc and other dotfile managers out there. It is written in rust, and is available as a very compact binary with no dependencies in (releases)[https://github.com/iamruinous/sprinkle/releases/latest].
+sprinkle is a very simple dotfile / symlink manager. It is inspired by rcrc and other dotfile managers out there. It is written in rust, and is available as a very compact binary with no dependencies in [releases](https://github.com/iamruinous/sprinkle/releases/latest).
 
 ## Example Config
 ```toml
