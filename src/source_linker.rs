@@ -20,6 +20,7 @@ pub struct SourceLinker {
     excludes: HashSet<PathBuf>,
     global_excludes: HashSet<PathBuf>,
     path: PathBuf,
+    force_overwrite: bool,
 }
 
 impl SourceLinker {
@@ -30,6 +31,7 @@ impl SourceLinker {
         path: &Path,
         excludes: &HashSet<PathBuf>,
         global_excludes: &HashSet<PathBuf>,
+        force_overwrite: bool,
     ) -> Self {
         Self {
             home_dir: home_dir.into(),
@@ -38,17 +40,31 @@ impl SourceLinker {
             path: path.into(),
             excludes: excludes.clone(),
             global_excludes: global_excludes.clone(),
+            force_overwrite,
         }
     }
 
     fn link_file(&self, entry: &DirEntry, dest_path: &Path) -> Result<()> {
         if dest_path.exists() {
-            info!(
-                "symlink exists, skipping {}, {}",
-                entry.path().display(),
-                dest_path.display()
-            );
-            return Ok(());
+            if self.force_overwrite {
+                if fs::symlink_metadata(dest_path)?.file_type().is_symlink() {
+                    warn!(
+                        "symlink exists, force_overwrite = true, removing {}",
+                        dest_path.display()
+                    );
+                    fs::remove_file(dest_path)?;
+                } else {
+                    warn!("File exists but is not a symlink: {}", dest_path.display());
+                    return Ok(());
+                }
+            } else {
+                info!(
+                    "symlink exists, skipping {}, {}",
+                    entry.path().display(),
+                    dest_path.display()
+                );
+                return Ok(());
+            }
         }
         info!(
             "Symlink {} => {}",
@@ -60,6 +76,7 @@ impl SourceLinker {
             info!("creating directory {}", parent_path.display());
             fs::create_dir_all(parent_path)?;
         }
+        // If we want to overwrite a symlink, first make sure its actually a symlink
         symlink(entry.path(), dest_path)?;
         Ok(())
     }

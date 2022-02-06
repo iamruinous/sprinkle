@@ -31,6 +31,10 @@ struct Cli {
         parse(from_os_str)
     )]
     home_dir_override: PathBuf,
+
+    /// Overwrite symlinks
+    #[clap(short, long, env = "SPRINKLE_FORCE_OVERWRITE")]
+    force_overwrite: bool,
 }
 
 fn main() -> Result<()> {
@@ -54,6 +58,7 @@ fn main() -> Result<()> {
 
     let args = Cli::parse();
     let home_dir = tilde_path(&args.home_dir_override);
+    let force_overwrite = args.force_overwrite;
     let sources = settings.sources;
     let excludes = settings.excludes;
     for (name, source) in sources.iter() {
@@ -64,6 +69,7 @@ fn main() -> Result<()> {
             &source.path,
             &source.excludes,
             &excludes,
+            force_overwrite,
         );
         debug!("{:?}", sl);
         sl.link()?;
